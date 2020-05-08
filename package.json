@@ -1,0 +1,45 @@
+{
+  "name": "skylark-sphere",
+  "description": "A version of sphere that ported to running on skylarkjs",
+  "version": "0.9.0",
+  "keywords": [
+    "skylark",
+    "ui",
+    "bootstrap4"
+  ],
+  "homepage": "https://github.com/skylark-integration/skylark-sphere/",
+  "author": "Hudaokeji, Inc.",
+  "scripts": {
+    "build": "sbundle build ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skylark-integration/skylark-sphere.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skylark-integration/skylark-sphere/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "skylark-threejs-ex": "git+https://github.com/skylark-integration/skylark-threejs-ex.git#master",
+    "skylark-domx": "git+https://github.com/skylark-domx/skylark-domx.git#master",
+    "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git#master",
+    "skylark-threejs": "git+https://github.com/skylark-integration/skylark-threejs.git#master"
+  },
+  "files": [
+    "demo/",
+    "dist/",
+    "src/",
+    "skins/"
+  ],
+  "skylarkjs": {
+    "build": {
+      "prepare": {
+        "cjstoamd": false
+      }
+    }
+  },
+  "engines": {
+    "node": ">=0.10.1"
+  }
+}
