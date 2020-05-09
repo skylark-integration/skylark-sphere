@@ -1,6 +1,7 @@
 define([
-  "./PSVNavBarButton"
+  "./Button"
 ],function(PSVNavBarButton){
+	"use strict";
 	/**
 	 * Navigation bar markers button class
 	 * @param {module:components.PSVNavBar} navbar

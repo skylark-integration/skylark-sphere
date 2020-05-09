@@ -1,0 +1,9 @@
+/**
+ * skylark-sphere - A version of sphere that ported to running on skylarkjs
+ * @author Hudaokeji, Inc.
+ * @version v0.9.0
+ * @link https://github.com/skylark-integration/skylark-sphere/
+ * @license MIT
+ */
+define(["../_psv/ctoc","../PSVUtils","./PSVComponent"],function(t,e,s){"use strict";function a(t){s.call(this,t),this.canvas=null,this.loader=null,this.create()}return a.prototype=Object.create(s.prototype),a.prototype.constructor=a,a.className="psv-loader-container",a.prototype.create=function(){s.prototype.create.call(this);var e,a=t.SYSTEM.pixelRatio;if(this.loader=document.createElement("div"),this.loader.className="psv-loader",this.container.appendChild(this.loader),this.canvas=document.createElement("canvas"),this.canvas.className="psv-loader-canvas",this.canvas.width=this.loader.clientWidth*a,this.canvas.height=this.loader.clientWidth*a,this.loader.appendChild(this.canvas),this.tickness=(this.loader.offsetWidth-this.loader.clientWidth)/2*a,this.psv.config.loading_img?((e=document.createElement("img")).className="psv-loader-image",e.src=this.psv.config.loading_img):this.psv.config.loading_txt&&((e=document.createElement("div")).className="psv-loader-text",e.innerHTML=this.psv.config.loading_txt),e){var i=Math.round(Math.sqrt(2*Math.pow((this.canvas.width/2-this.tickness/2)/a,2)));e.style.maxWidth=i+"px",e.style.maxHeight=i+"px",this.loader.appendChild(e)}},a.prototype.destroy=function(){delete this.loader,delete this.canvas,s.prototype.destroy.call(this)},a.prototype.setProgress=function(t){var s=this.canvas.getContext("2d");s.clearRect(0,0,this.canvas.width,this.canvas.height),s.lineWidth=this.tickness,s.strokeStyle=e.getStyle(this.loader,"color"),s.beginPath(),s.arc(this.canvas.width/2,this.canvas.height/2,this.canvas.width/2-this.tickness/2,-Math.PI/2,t/100*2*Math.PI-Math.PI/2),s.stroke()},a});
+//# sourceMappingURL=../sourcemaps/components/PSVLoader.js.map

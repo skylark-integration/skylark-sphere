@@ -1,16 +1,23 @@
 define([
+  "skylark-threejs",
   "./_psv/ctoc",
    "./PSVError",
   "./PSVUtils",
+  "./PSVMarker",
+  "./PSVAnimation",
   "./_psv/core",
-  "./_psv/defautls",
+  "./_psv/defaults",
   "./_psv/events",
   "./_psv/utils"
  ],function(
+  THREE,
   PhotoSphereViewer,
   PSVError,
-  PSVUtils
+  PSVUtils,
+  PSVMarker,
+  PSVAnimation
 ){
+  "use strict";
 
   /**
    * @typedef {Object} PhotoSphereViewer.Point
@@ -153,7 +160,7 @@ define([
    * @returns {PhotoSphereViewer}
    */
 
-  uEvent.mixin(PhotoSphereViewer);
+  //uEvent.mixin(PhotoSphereViewer);
 
 
 

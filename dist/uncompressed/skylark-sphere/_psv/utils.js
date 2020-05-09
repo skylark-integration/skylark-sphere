@@ -1,6 +1,15 @@
 define([
-  "./ctoc"
-],function(PhotoSphereViewer){
+  "skylark-threejs",
+  "./ctoc",
+  "../PSVUtils",
+  "../PSVError"
+],function(
+  THREE,
+  PhotoSphereViewer,
+  PSVUtils,
+  PSVError
+){
+  "use strict";
   /**
    * @summary Inits the global SYSTEM var with generic support information
    * @private

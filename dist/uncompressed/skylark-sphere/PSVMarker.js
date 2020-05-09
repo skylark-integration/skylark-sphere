@@ -1,10 +1,13 @@
 define([
   "./PSVError",
-  "./PSVAnimation"
+  "./PSVAnimation",
+  "./PSVUtils"
 ],function(
   PSVError,
-  PSVAnimation
+  PSVAnimation,
+  PSVUtils
 ){
+  "use strict";
   /**
    * Object representing a marker
    * @param {Object} properties - see {@link http://photo-sphere-viewer.js.org/markers.html#config} (merged with the object itself)

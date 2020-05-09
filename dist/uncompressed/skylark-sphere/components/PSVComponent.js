@@ -3,6 +3,7 @@ define([
 ],function(
   PhotoSphereViewer
 ){
+  "use strict";
   /**
    * @module components
    */

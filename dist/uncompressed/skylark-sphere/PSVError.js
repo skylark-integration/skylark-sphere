@@ -1,4 +1,5 @@
 define([],function(){
+	"use strict";
 	/**
 	 * Custom error used in the lib
 	 * @param {string} message

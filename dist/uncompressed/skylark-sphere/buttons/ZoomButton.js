@@ -1,6 +1,7 @@
 define([
-  "./PSVNavBarButton"
+  "./Button"
 ],function(PSVNavBarButton){
+  "use strict";
   /**
    * Navigation bar zoom button class
    * @param {module:components.PSVNavBar} navbar
@@ -86,7 +87,7 @@ define([
 
     this.psv.on('zoom-updated', this);
 
-    this.psv.once('ready', function() {
+    this.psv.one('ready', function() {
       this._moveZoomValue(this.psv.prop.zoom_lvl);
     }.bind(this));
   };

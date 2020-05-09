@@ -1,6 +1,11 @@
 define([
-  "./PSVNavBarButton"
-],function(PSVNavBarButton){
+  "../_psv/ctoc",
+  "./Button"
+],function(
+  PhotoSphereViewer,
+  PSVNavBarButton
+){
+  "use strict";
   /**
    * Navigation bar fullscreen button class
    * @param {module:components.PSVNavBar} navbar

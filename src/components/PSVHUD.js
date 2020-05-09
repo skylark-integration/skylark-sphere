@@ -707,7 +707,7 @@ define([
         data.marker = marker.psvMarker;
       }
       else {
-        e.stopPropagation();
+        e.stopImmediatePropagation(); //stopPropagation(); modified by lwf
       }
     }
     else if (this.currentMarker) {

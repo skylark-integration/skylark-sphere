@@ -1,8 +1,18 @@
 define([
+  "skylark-threejs",
+  "skylark-threejs-ex/controls/DeviceOrientationControls",
+  "skylark-threejs-ex/effects/StereoEffect",
   "./_psv/ctoc"
 ],function(
+  THREE,
+  DeviceOrientationControls,
+  StereoEffect,
   PhotoSphereViewer
 ){
+  "use strict";
+  THREE.DeviceOrientationControls = DeviceOrientationControls;
+  THREE.StereoEffect = StereoEffect;
+
   /**
    * Static utilities for PSV
    * @namespace

@@ -4470,7 +4470,7 @@ PSVNavBarCaption.prototype.create = function() {
 
   this.content = document.createElement('div');
   this.content.className = 'psv-caption-content';
-  this.container.appendChild(this.content);
+  this.container.appendChild(this.content); 
 
   window.addEventListener('resize', this);
 };

@@ -1,6 +1,13 @@
 define([
-  "../components/PSVComponent"
-],function(PSVComponent){
+  "../_psv/ctoc",
+  "../components/PSVComponent",
+  "../PSVUtils"
+],function(
+  PhotoSphereViewer,
+  PSVComponent,
+  PSVUtils
+){
+  "use strict";
   /**
    * @module components/buttons
    */

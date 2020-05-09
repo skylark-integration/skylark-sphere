@@ -1,12 +1,33 @@
 define([
   "../_psv/ctoc",
-  "../PSVUtils"
-  "./PSVComponent"
+  "../buttons/AutorotateButton",
+  "../buttons/CustomButton",
+  "../buttons/DownloadButton",
+  "../buttons/FullscreenButton",
+  "../buttons/GyroscopeButton",
+  "../buttons/MarkersButton",
+  "../buttons/StereoButton",
+  "../buttons/ZoomButton",
+  "../PSVUtils",
+  "../PSVError",
+  "./PSVComponent",
+  "./PSVNavBarCaption"
 ],function(
   PhotoSphereViewer,
+  PSVNavBarAutorotateButton,
+  PSVNavBarCustomButton,
+  PSVNavBarDownloadButton,
+  PSVNavBarFullscreenButton,
+  PSVNavBarGyroscopeButton,
+  PSVNavBarMarkersButton,
+  PSVNavBarStereoButton,
+  PSVNavBarZoomButton,
   PSVUtils,
-  PSVComponent
+  PSVError,
+  PSVComponent,
+  PSVNavBarCaption
 ){
+  "use strict";
   /**
    * Navigation bar class
    * @param {PhotoSphereViewer} psv

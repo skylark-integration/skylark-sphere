@@ -1,7 +1,19 @@
 define([
+  "skylark-threejs",
+  "../_psv/ctoc",
+  "../PSVError",
   "../PSVUtils",
+  "../PSVMarker",
   "./PSVComponent"
-],function(PSVUtils,PSVComponent){
+],function(
+  THREE,
+  PhotoSphereViewer,
+  PSVError,
+  PSVUtils,
+  PSVMarker,
+  PSVComponent
+){
+  "use strict";
   /**
    * HUD class
    * @param {PhotoSphereViewer} psv
@@ -332,7 +344,8 @@ define([
      * @returns {PSVMarker[]}
      */
     var html = this.psv.config.templates.markersList({
-      markers: this.psv.change('render-markers-list', markers),
+      markers : markers,
+//      markers: this.psv.change('render-markers-list', markers),
       config: this.psv.config
     });
 
@@ -694,7 +707,7 @@ define([
         data.marker = marker.psvMarker;
       }
       else {
-        e.stopPropagation();
+        e.stopImmediatePropagation(); //stopPropagation(); modified by lwf
       }
     }
     else if (this.currentMarker) {

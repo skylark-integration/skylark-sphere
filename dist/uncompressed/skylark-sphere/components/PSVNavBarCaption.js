@@ -1,12 +1,15 @@
 define([
   "../_psv/ctoc",
-  "../PSVUtils"
+  "../buttons/CaptionButton",
+  "../PSVUtils",
   "./PSVComponent"
 ],function(
   PhotoSphereViewer,
+  PSVNavBarCaptionButton,
   PSVUtils,
   PSVComponent
 ){
+  "use strict";
   /**
    * Navbar caption class
    * @param {PSVNavBar} navbar

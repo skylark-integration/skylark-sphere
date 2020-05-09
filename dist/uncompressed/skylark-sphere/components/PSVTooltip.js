@@ -1,12 +1,13 @@
 define([
   "../_psv/ctoc",
-  "../PSVUtils"
+  "../PSVUtils",
   "./PSVComponent"
 ],function(
   PhotoSphereViewer,
   PSVUtils,
   PSVComponent
 ){
+  "use strict";
   /**
    * Tooltip class
    * @param {module:components.PSVHUD} hud

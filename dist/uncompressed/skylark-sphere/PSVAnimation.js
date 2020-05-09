@@ -1,4 +1,5 @@
 define([],function(){
+  "use strict";
   /**
    * @callback OnTick
    * @memberOf PSVAnimation
@@ -50,6 +51,7 @@ define([],function(){
         }.bind(this), options.delay);
       }
       else {
+
         window.requestAnimationFrame(this._run.bind(this));
       }
     }

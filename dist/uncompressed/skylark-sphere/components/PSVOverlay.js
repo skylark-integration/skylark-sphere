@@ -1,12 +1,13 @@
 define([
   "../_psv/ctoc",
-  "../PSVUtils"
+  "../PSVUtils",
   "./PSVComponent"
 ],function(
   PhotoSphereViewer,
   PSVUtils,
   PSVComponent
 ){
+  "use strict";
   /**
    * Overlay class
    * @param {PhotoSphereViewer} psv

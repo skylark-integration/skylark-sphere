@@ -1,5 +1,5 @@
 define([
-  "./PSVNavBarButton"
+  "./Button"
 ],function(PSVNavBarButton){
   /**
    * Navigation bar caption button class

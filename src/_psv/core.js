@@ -4,7 +4,7 @@ define([
   "../doT",
   "../PSVError",
   "../PSVUtils",
-  "../PSVAnimation,"
+  "../PSVAnimation",
   "../components/PSVHUD",
   "../components/PSVLoader",
   "../components/PSVNavBar",

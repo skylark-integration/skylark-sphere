@@ -1,6 +1,11 @@
 define([
-  "./PSVNavBarButton"
-],function(PSVNavBarButton){
+  "../PSVUtils",
+  "./Button"
+],function(
+  PSVUtils,
+  PSVNavBarButton
+){
+  "use strict";
   /**
    * Navigation bar custom button class
    * @param {module:components.PSVNavBar} navbar

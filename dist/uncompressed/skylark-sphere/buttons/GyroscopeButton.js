@@ -1,6 +1,13 @@
 define([
-  "./PSVNavBarButton"
-],function(PSVNavBarButton){
+  "../_psv/ctoc",
+  "../PSVUtils",
+  "./Button"
+],function(
+  PhotoSphereViewer,
+  PSVUtils,
+  PSVNavBarButton
+){
+  "use strict";
   /**
    * Navigation bar gyroscope button class
    * @param {module:components.PSVNavBar} navbar
