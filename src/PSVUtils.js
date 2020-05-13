@@ -2,8 +2,10 @@ define([
   "skylark-langx-types",
   "skylark-langx-objects",
   "skylark-langx-strings",
+  "skylark-langx-funcs",
   "skylark-domx-noder",
   "skylark-domx-styler",
+  "skylark-domx-finder",
   "skylark-devices-points/mouse",
   "skylark-devices-points/touch",
   "skylark-devices-orientation",
@@ -16,8 +18,10 @@ define([
   types,
   objects,
   strings,
+  funcs,
   noder,
   styler,
+  finder,
   mouse,
   touch,
   orientation,
@@ -154,17 +158,7 @@ define([
    * @param {string} selector
    * @returns {HTMLElement}
    */
-  PSVUtils.getClosest = function(el, selector) {
-    var matches = el.matches || el.msMatchesSelector;
-
-    do {
-      if (matches.bind(el)(selector)) {
-        return el;
-      }
-    } while (!!(el instanceof SVGElement ? el = el.parentNode : el = el.parentElement));
-
-    return null;
-  };
+  PSVUtils.getClosest = finder.ancestor;
 
   /**
    * @summary Gets the event name for mouse wheel
@@ -578,44 +572,7 @@ define([
    * @param {int} wait
    * @returns {Function}
    */
-  PSVUtils.throttle = function(func, wait) {
-    var self, args, result;
-    var timeout = null;
-    var previous = 0;
-    var later = function() {
-      previous = Date.now();
-      timeout = null;
-      result = func.apply(self, args);
-      if (!timeout) {
-        self = args = null;
-      }
-    };
-    return function() {
-      var now = Date.now();
-      if (!previous) {
-        previous = now;
-      }
-      var remaining = wait - (now - previous);
-      self = this;
-      args = arguments;
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-        previous = now;
-        result = func.apply(self, args);
-        if (!timeout) {
-          self = args = null;
-        }
-      }
-      else if (!timeout) {
-        timeout = setTimeout(later, remaining);
-      }
-      return result;
-    };
-  };
-
+  PSVUtils.throttle = funcs.debounce;
   /**
    * @summary Test if an object is a plain object
    * @description Test if an object is a plain object, i.e. is constructed
@@ -636,44 +593,9 @@ define([
    * @returns {Object} target
    */
   PSVUtils.deepmerge = function(target, src) {
-    var first = src;
+    
+    return objects.mixin(target,src,true);
 
-    return (function merge(target, src) {
-      if (Array.isArray(src)) {
-        if (!target || !Array.isArray(target)) {
-          target = [];
-        }
-        else {
-          target.length = 0;
-        }
-        src.forEach(function(e, i) {
-          target[i] = merge(null, e);
-        });
-      }
-      else if (typeof src === 'object') {
-        if (!target || Array.isArray(target)) {
-          target = {};
-        }
-        Object.keys(src).forEach(function(key) {
-          if (typeof src[key] !== 'object' || !src[key] || !PSVUtils.isPlainObject(src[key])) {
-            target[key] = src[key];
-          }
-          else if (src[key] != first) {
-            if (!target[key]) {
-              target[key] = merge(null, src[key]);
-            }
-            else {
-              merge(target[key], src[key]);
-            }
-          }
-        });
-      }
-      else {
-        target = src;
-      }
-
-      return target;
-    }(target, src));
   };
 
   /**
@@ -706,11 +628,7 @@ define([
    * @param {ForEach} callback
    */
   PSVUtils.forEach = function(object, callback) {
-    for (var key in object) {
-      if (object.hasOwnProperty(key)) {
-        callback(object[key], key);
-      }
-    }
+    return objects.each(object,callback,true);
   };
 
   return PSVUtils;
