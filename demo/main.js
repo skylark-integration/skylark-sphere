@@ -210,25 +210,23 @@ requirejs.config({
           {
             name: 'skylark-widgets-swt',
             location : "../node_modules/skylark-widgets-swt/dist/uncompressed/skylark-widgets-swt",
-//            location : "../../skylark-widgets-swt/src",
+
             main: 'main'
           },
           {
             name: 'skylark-fabric',
             location : "../node_modules/skylark-fabric/dist/uncompressed/skylark-fabric",
-//            location : "../../skylark-widgets-swt/src",
+
             main: 'main'
           },
           {
             name: 'skylark-threejs',
             location : "../node_modules/skylark-threejs/dist/uncompressed/skylark-threejs",
-//            location : "../../skylark-widgets-swt/src",
             main: 'main'
           },
           {
             name: 'skylark-threejs-ex',
             location : "../node_modules/skylark-threejs-ex/dist/uncompressed/skylark-threejs-ex",
-//            location : "../../skylark-widgets-swt/src",
             main: 'main'
           },
           {
@@ -239,13 +237,24 @@ requirejs.config({
           {
             name: 'skylark-zlib',
             location : "../node_modules/skylark-zlib/dist/uncompressed/skylark-zlib",
-//            location : "../../skylark-widgets-swt/src",
             main: 'main'
           },
           {
-            name: 'skylark-mrdoobui',
-            location : "../node_modules/skylark-mrdoobui/dist/uncompressed/skylark-mrdoobui",
-//            location : "../../skylark-widgets-swt/src",
+            name: 'skylark-devices-points',
+//            location : "../node_modules/skylark-devices-points/dist/uncompressed/skylark-devices-points",
+            location : "../../../../../devices/skylark-devices-points/src",
+            main: 'main'
+          },
+          {
+            name: 'skylark-devices-orientation',
+//            location : "../node_modules/skylark-devices-orientation/dist/uncompressed/skylark-devices-orientation",
+            location : "../../../../../devices/skylark-devices-orientation/src",
+            main: 'main'
+          },
+          {
+            name: 'skylark-devices-webgl',
+//            location : "../node_modules/skylark-devices-webgl/dist/uncompressed/skylark-devices-webgl",
+            location : "../../../../../devices/skylark-devices-webgl/src",
             main: 'main'
           },
 
