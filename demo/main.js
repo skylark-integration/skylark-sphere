@@ -31,6 +31,11 @@ requirejs.config({
             main: 'main'
          },
          {
+           name : "skylark-langx-events",
+           location : "../node_modules/skylark-langx-events/dist/uncompressed/skylark-langx-events",
+            main: 'main'
+         },
+         {
            name : "skylark-langx-funcs",
            location : "../node_modules/skylark-langx-funcs/dist/uncompressed/skylark-langx-funcs",
             main: 'main'
@@ -241,20 +246,20 @@ requirejs.config({
           },
           {
             name: 'skylark-devices-points',
-//            location : "../node_modules/skylark-devices-points/dist/uncompressed/skylark-devices-points",
-            location : "../../../../../devices/skylark-devices-points/src",
+            location : "../node_modules/skylark-devices-points/dist/uncompressed/skylark-devices-points",
+//            location : "../../../../../devices/skylark-devices-points/src",
             main: 'main'
           },
           {
             name: 'skylark-devices-orientation',
-//            location : "../node_modules/skylark-devices-orientation/dist/uncompressed/skylark-devices-orientation",
-            location : "../../../../../devices/skylark-devices-orientation/src",
+            location : "../node_modules/skylark-devices-orientation/dist/uncompressed/skylark-devices-orientation",
+//            location : "../../../../../devices/skylark-devices-orientation/src",
             main: 'main'
           },
           {
             name: 'skylark-devices-webgl',
-//            location : "../node_modules/skylark-devices-webgl/dist/uncompressed/skylark-devices-webgl",
-            location : "../../../../../devices/skylark-devices-webgl/src",
+            location : "../node_modules/skylark-devices-webgl/dist/uncompressed/skylark-devices-webgl",
+//            location : "../../../../../devices/skylark-devices-webgl/src",
             main: 'main'
           },
 

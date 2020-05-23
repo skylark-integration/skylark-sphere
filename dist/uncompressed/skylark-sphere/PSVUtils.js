@@ -1,9 +1,31 @@
 define([
+  "skylark-langx-types",
+  "skylark-langx-objects",
+  "skylark-langx-strings",
+  "skylark-langx-funcs",
+  "skylark-domx-noder",
+  "skylark-domx-styler",
+  "skylark-domx-finder",
+  "skylark-devices-points/mouse",
+  "skylark-devices-points/touch",
+  "skylark-devices-orientation",
+  "skylark-devices-webgl",
   "skylark-threejs",
   "skylark-threejs-ex/controls/DeviceOrientationControls",
   "skylark-threejs-ex/effects/StereoEffect",
   "./_psv/ctoc"
 ],function(
+  types,
+  objects,
+  strings,
+  funcs,
+  noder,
+  styler,
+  finder,
+  mouse,
+  touch,
+  orientation,
+  webgl,
   THREE,
   DeviceOrientationControls,
   StereoEffect,
@@ -76,105 +98,31 @@ define([
    * @summary Tries to return a canvas webgl context
    * @returns {WebGLRenderingContext}
    */
-  PSVUtils.getWebGLCtx = function() {
-    var canvas = document.createElement('canvas');
-    var names = ['webgl', 'experimental-webgl', 'moz-webgl', 'webkit-3d'];
-    var context = null;
-
-    if (!canvas.getContext) {
-      return null;
-    }
-
-    if (names.some(function(name) {
-        try {
-          context = canvas.getContext(name);
-          return (context && typeof context.getParameter === 'function');
-        } catch (e) {
-          return false;
-        }
-      })) {
-      return context;
-    }
-    else {
-      return null;
-    }
-  };
+  PSVUtils.getWebGLCtx = webgl.getWebGLCtx;
 
   /**
    * @summary Detects if WebGL is supported
    * @returns {boolean}
    */
-  PSVUtils.isWebGLSupported = function() {
-    return !!window.WebGLRenderingContext && PSVUtils.getWebGLCtx() !== null;
-  };
+  PSVUtils.isWebGLSupported = webgl.isWebGLSupported;
 
   /**
    * @summary Detects if device orientation is supported
    * @description We can only be sure device orientation is supported once received an event with coherent data
    * @returns {Promise<boolean>}
    */
-  PSVUtils.isDeviceOrientationSupported = function() {
-    return new Promise(function(resolve) {
-      if ('DeviceOrientationEvent' in window) {
-        var listener = function(e) {
-          if (e && e.alpha !== null && !isNaN(e.alpha)) {
-            resolve(true);
-          }
-          else {
-            resolve(false);
-          }
-
-          window.removeEventListener('deviceorientation', listener);
-        };
-
-        window.addEventListener('deviceorientation', listener, false);
-
-        // after 2 secs, auto-reject the promise
-        setTimeout(listener, 2000);
-      }
-      else {
-        resolve(false);
-      }
-    });
-  };
-
+  PSVUtils.isDeviceOrientationSupported = orientation.isDeviceOrientationSupported;
   /**
    * @summary Detects if the user is using a touch screen
    * @returns {Promise<boolean>}
    */
-  PSVUtils.isTouchEnabled = function() {
-    return new Promise(function(resolve) {
-      var listener = function(e) {
-        if (e) {
-          resolve(true);
-        }
-        else {
-          resolve(false);
-        }
-
-        window.removeEventListener('touchstart', listener);
-      };
-
-      window.addEventListener('touchstart', listener, false);
-
-      // after 10 secs auto-reject the promise
-      setTimeout(listener, 10000);
-    });
-  };
+  PSVUtils.isTouchEnabled = touch.isTouchEnabled;
 
   /**
    * @summary Gets max texture width in WebGL context
    * @returns {int}
    */
-  PSVUtils.getMaxTextureWidth = function() {
-    var ctx = PSVUtils.getWebGLCtx();
-    if (ctx !== null) {
-      return ctx.getParameter(ctx.MAX_TEXTURE_SIZE);
-    }
-    else {
-      return 0;
-    }
-  };
+  PSVUtils.getMaxTextureWidth = webgl.getMaxTextureWidth;
 
   /**
    * @summary Toggles a CSS class
@@ -182,78 +130,27 @@ define([
    * @param {string} className
    * @param {boolean} [active] - forced state
    */
-  PSVUtils.toggleClass = function(element, className, active) {
-    // manual implementation for IE11 and SVGElement
-    if (!element.classList) {
-      var currentClassName = element.getAttribute('class') || '';
-      var currentActive = currentClassName.indexOf(className) !== -1;
-      var regex = new RegExp('(?:^|\\s)' + className + '(?:\\s|$)');
-
-      if ((active === undefined || active) && !currentActive) {
-        currentClassName += currentClassName.length > 0 ? ' ' + className : className;
-      }
-      else if (!active) {
-        currentClassName = currentClassName.replace(regex, ' ');
-      }
-
-      element.setAttribute('class', currentClassName);
-    }
-    else {
-      if (active === undefined) {
-        element.classList.toggle(className);
-      }
-      else if (active && !element.classList.contains(className)) {
-        element.classList.add(className);
-      }
-      else if (!active) {
-        element.classList.remove(className);
-      }
-    }
-  };
-
+  PSVUtils.toggleClass =styler.toggleClass;
   /**
    * @summary Adds one or several CSS classes to an element
    * @param {HTMLElement} element
    * @param {string} className
    */
-  PSVUtils.addClasses = function(element, className) {
-    if (!className) {
-      return;
-    }
-    className.split(' ').forEach(function(name) {
-      PSVUtils.toggleClass(element, name, true);
-    });
-  };
+  PSVUtils.addClasses = styler.addClass;
 
   /**
    * @summary Removes one or several CSS classes to an element
    * @param {HTMLElement} element
    * @param {string} className
    */
-  PSVUtils.removeClasses = function(element, className) {
-    if (!className) {
-      return;
-    }
-    className.split(' ').forEach(function(name) {
-      PSVUtils.toggleClass(element, name, false);
-    });
-  };
-
+  PSVUtils.removeClasses =  styler.removeClass;
   /**
    * @summary Searches if an element has a particular parent at any level including itself
    * @param {HTMLElement} el
    * @param {HTMLElement} parent
    * @returns {boolean}
    */
-  PSVUtils.hasParent = function(el, parent) {
-    do {
-      if (el === parent) {
-        return true;
-      }
-    } while (!!(el = el.parentNode));
-
-    return false;
-  };
+  PSVUtils.hasParent = noder.isChildOf;
 
   /**
    * @summary Gets the closest parent (can by itself)
@@ -261,28 +158,14 @@ define([
    * @param {string} selector
    * @returns {HTMLElement}
    */
-  PSVUtils.getClosest = function(el, selector) {
-    var matches = el.matches || el.msMatchesSelector;
+  PSVUtils.getClosest = finder.closest;
 
-    do {
-      if (matches.bind(el)(selector)) {
-        return el;
-      }
-    } while (!!(el instanceof SVGElement ? el = el.parentNode : el = el.parentElement));
-
-    return null;
-  };
 
   /**
    * @summary Gets the event name for mouse wheel
    * @returns {string}
    */
-  PSVUtils.mouseWheelEvent = function() {
-    return 'onwheel' in document.createElement('div') ? 'wheel' : // Modern browsers support "wheel"
-      document.onmousewheel !== undefined ? 'mousewheel' : // Webkit and IE support at least "mousewheel"
-        'DOMMouseScroll'; // let's assume that remaining browsers are older Firefox
-  };
-
+  PSVUtils.mouseWheelEvent = mouse.mouseWheelEvent;
   /**
    * @summary Returns the key name of a KeyboardEvent
    * @param {KeyboardEvent} evt
@@ -397,11 +280,7 @@ define([
    * @param {string} str
    * @returns {string}
    */
-  PSVUtils.dasherize = function(str) {
-    return str.replace(/[A-Z](?:(?=[^A-Z])|[A-Z]*(?=[A-Z][^A-Z]|$))/g, function(s, i) {
-      return (i > 0 ? '-' : '') + s.toLowerCase();
-    });
-  };
+  PSVUtils.dasherize = strings.dasherize;
 
   /**
    * @summary Returns the value of a given attribute in the panorama metadata
@@ -454,9 +333,7 @@ define([
    * @param {string} prop
    * @returns {*}
    */
-  PSVUtils.getStyle = function(elt, prop) {
-    return window.getComputedStyle(elt, null)[prop];
-  };
+  PSVUtils.getStyle = styler.css;
 
   /**
    * @summary Compute the shortest offset between two longitudes
@@ -696,44 +573,7 @@ define([
    * @param {int} wait
    * @returns {Function}
    */
-  PSVUtils.throttle = function(func, wait) {
-    var self, args, result;
-    var timeout = null;
-    var previous = 0;
-    var later = function() {
-      previous = Date.now();
-      timeout = null;
-      result = func.apply(self, args);
-      if (!timeout) {
-        self = args = null;
-      }
-    };
-    return function() {
-      var now = Date.now();
-      if (!previous) {
-        previous = now;
-      }
-      var remaining = wait - (now - previous);
-      self = this;
-      args = arguments;
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-        previous = now;
-        result = func.apply(self, args);
-        if (!timeout) {
-          self = args = null;
-        }
-      }
-      else if (!timeout) {
-        timeout = setTimeout(later, remaining);
-      }
-      return result;
-    };
-  };
-
+  PSVUtils.throttle = funcs.debounce;
   /**
    * @summary Test if an object is a plain object
    * @description Test if an object is a plain object, i.e. is constructed
@@ -744,24 +584,7 @@ define([
    * @param {*} obj
    * @returns {boolean}
    */
-  PSVUtils.isPlainObject = function(obj) {
-    // Basic check for Type object that's not null
-    if (typeof obj === 'object' && obj !== null) {
-      // If Object.getPrototypeOf supported, use it
-      if (typeof Object.getPrototypeOf === 'function') {
-        var proto = Object.getPrototypeOf(obj);
-        return proto === Object.prototype || proto === null;
-      }
-
-      // Otherwise, use internal class
-      // This should be reliable as if getPrototypeOf not supported, is pre-ES5
-      return Object.prototype.toString.call(obj) === '[object Object]';
-    }
-
-    // Not an object
-    return false;
-  };
-
+  PSVUtils.isPlainObject =  types.isPlainObject;
   /**
    * @summary Merges the enumerable attributes of two objects
    * @description Replaces arrays and alters the target object.
@@ -771,44 +594,9 @@ define([
    * @returns {Object} target
    */
   PSVUtils.deepmerge = function(target, src) {
-    var first = src;
+    
+    return objects.mixin(target,src,true);
 
-    return (function merge(target, src) {
-      if (Array.isArray(src)) {
-        if (!target || !Array.isArray(target)) {
-          target = [];
-        }
-        else {
-          target.length = 0;
-        }
-        src.forEach(function(e, i) {
-          target[i] = merge(null, e);
-        });
-      }
-      else if (typeof src === 'object') {
-        if (!target || Array.isArray(target)) {
-          target = {};
-        }
-        Object.keys(src).forEach(function(key) {
-          if (typeof src[key] !== 'object' || !src[key] || !PSVUtils.isPlainObject(src[key])) {
-            target[key] = src[key];
-          }
-          else if (src[key] != first) {
-            if (!target[key]) {
-              target[key] = merge(null, src[key]);
-            }
-            else {
-              merge(target[key], src[key]);
-            }
-          }
-        });
-      }
-      else {
-        target = src;
-      }
-
-      return target;
-    }(target, src));
   };
 
   /**
@@ -816,9 +604,7 @@ define([
    * @param {Object} src
    * @returns {Object}
    */
-  PSVUtils.clone = function(src) {
-    return PSVUtils.deepmerge(null, src);
-  };
+  PSVUtils.clone = objects.clone;
 
   /**
    * @summary Normalize mousewheel values accross browsers
@@ -828,54 +614,7 @@ define([
    * @param {MouseWheelEvent} event
    * @returns {{spinX: number, spinY: number, pixelX: number, pixelY: number}}
    */
-  PSVUtils.normalizeWheel = function(event) {
-    var PIXEL_STEP  = 10;
-    var LINE_HEIGHT = 40;
-    var PAGE_HEIGHT = 800;
-
-    var sX = 0, sY = 0; // spinX, spinY
-    var pX = 0, pY = 0; // pixelX, pixelY
-
-    // Legacy
-    if ('detail'      in event) { sY = event.detail; }
-    if ('wheelDelta'  in event) { sY = -event.wheelDelta / 120; }
-    if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
-    if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
-
-    // side scrolling on FF with DOMMouseScroll
-    if ('axis' in event && event.axis === event.HORIZONTAL_AXIS) {
-      sX = sY;
-      sY = 0;
-    }
-
-    pX = sX * PIXEL_STEP;
-    pY = sY * PIXEL_STEP;
-
-    if ('deltaY' in event) { pY = event.deltaY; }
-    if ('deltaX' in event) { pX = event.deltaX; }
-
-    if ((pX || pY) && event.deltaMode) {
-      if (event.deltaMode === 1) { // delta in LINE units
-        pX *= LINE_HEIGHT;
-        pY *= LINE_HEIGHT;
-      }
-      else {                      // delta in PAGE units
-        pX *= PAGE_HEIGHT;
-        pY *= PAGE_HEIGHT;
-      }
-    }
-
-    // Fall-back if spin cannot be determined
-    if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
-    if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
-
-    return {
-      spinX: sX,
-      spinY: sY,
-      pixelX: pX,
-      pixelY: pY
-    };
-  };
+  PSVUtils.normalizeWheel = mouse.normalizeWheel;
 
   /**
    * @callback ForEach
@@ -890,11 +629,7 @@ define([
    * @param {ForEach} callback
    */
   PSVUtils.forEach = function(object, callback) {
-    for (var key in object) {
-      if (object.hasOwnProperty(key)) {
-        callback(object[key], key);
-      }
-    }
+    return objects.each(object,callback,true);
   };
 
   return PSVUtils;

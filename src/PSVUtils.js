@@ -158,7 +158,8 @@ define([
    * @param {string} selector
    * @returns {HTMLElement}
    */
-  PSVUtils.getClosest = finder.ancestor;
+  PSVUtils.getClosest = finder.closest;
+
 
   /**
    * @summary Gets the event name for mouse wheel
